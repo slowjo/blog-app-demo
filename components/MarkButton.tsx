@@ -5,6 +5,7 @@ import { HiStar, HiOutlineStar, HiBookmark, HiOutlineBookmark } from "react-icon
 import useReactiveMarkState from "@/hooks/useReactiveMarkState"
 import { useRouter } from "next/navigation"
 import { Button } from "flowbite-react"
+import { Tooltip } from 'flowbite-react';
 
 
 type MarkButtonProps = {
@@ -20,12 +21,12 @@ const UnMarkedIcon = ({ markAs } : { markAs : string }) => {
             {markAs === 'like' ? (
                 <>
                     <HiOutlineStar className="text-lg" />
-                    <p>Like</p>
+                    {/* <p>Like</p> */}
                 </>
             ) : (
                 <>
                     <HiOutlineBookmark className="text-lg" />
-                    <p>Bookmark</p>
+                    {/* <p>Bookmark</p> */}
                 </>
             )}
         </>
@@ -38,12 +39,12 @@ const MarkedIcon = ({ markAs } : { markAs : string }) => {
             {markAs === 'like' ? (
                 <>
                     <HiStar className="text-lg" />
-                    <p>Liked</p>
+                    {/* <p>Liked</p> */}
                 </>
             ) : (
                 <>
                     <HiBookmark className="text-lg" />
-                    <p>Bookmarked</p>
+                    {/* <p>Bookmarked</p> */}
                 </>
             )}
         </>
@@ -65,14 +66,16 @@ export default function MarkButton({ isMarked, postId, guest, markAs } : MarkBut
     }
 
     return(
-        <Button onClick={handleClick} pill size='lg' color='orange' className="bg-transparent text-gray-900 scale-95 hover:scale-100 transition-transform duration-100">
-            {/* <div className="flex items-center justify-start gap-2"> */}
-                {markedAtClient ? (
-                    <MarkedIcon markAs={markAs} />
-                ) : (
-                    <UnMarkedIcon markAs={markAs} />
-                )}
-            {/* </div> */}
-        </Button>
+        <Tooltip content="add this post to your reading list">
+            <Button onClick={handleClick} size='lg' color='orange' className="bg-transparent text-gray-900 scale-95 hover:scale-100 transition-transform duration-100 w-10 h-10 rounded-full">
+                {/* <div className="flex items-center justify-start gap-2"> */}
+                    {markedAtClient ? (
+                        <MarkedIcon markAs={markAs} />
+                    ) : (
+                        <UnMarkedIcon markAs={markAs} />
+                    )}
+                {/* </div> */}
+            </Button>        
+        </Tooltip>
     )
 }

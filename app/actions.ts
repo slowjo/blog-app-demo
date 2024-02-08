@@ -3,6 +3,8 @@
 import { auth } from "@clerk/nextjs";
 import { createClient } from "@supabase/supabase-js"
 import { revalidatePath } from "next/cache"
+import { createClient as createPrismicClient } from "@/prismicio"
+import * as prismic from '@prismicio/client'
 
 
 export async function createSupabaseClientWithToken() {
@@ -115,17 +117,29 @@ export async function unBookmark(postId : string) {
     return data
   }
 
+// export async function getPosts() {
+//     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
+
+//     const { data, error } = await supabase.from('posts').select()
+
+//     if (error) {
+//         console.log(error)
+//     }
+
+//     return ({ data, error })
+// }  
+
 export async function getPosts() {
-    const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
+    const client = createPrismicClient()
 
-    const { data, error } = await supabase.from('posts').select()
-
-    if (error) {
-        console.log(error)
+    try {
+        const documents = await client.getAllByType('post')
+        console.log(documents[0].data.preview_image)
+        return documents
+    } catch(error) {
+        console.log(error);
     }
-
-    return ({ data, error })
-}  
+}
 
 export async function getPostLikes(postId : string) {
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
@@ -138,7 +152,7 @@ export async function getPostLikes(postId : string) {
     console.log('count: ', count);
 
     if (error) {
-        console.log(error);
+        console.log(error)
     }
 
     return ({ count, error })
@@ -159,10 +173,15 @@ export async function getUserPostLike(postId : string) {
 
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
+    // const { data, error } = await supabase
+    //     .from('posts')
+    //     .select('*, uniquelikes!inner(postId)')
+    //     .eq('uniquelikes.postId', postId).eq('uniquelikes.userId', userId).maybeSingle()
+
     const { data, error } = await supabase
-        .from('posts')
-        .select('*, uniquelikes!inner(postId)')
-        .eq('uniquelikes.postId', postId).eq('uniquelikes.userId', userId).maybeSingle()
+        .from('uniquelikes')
+        .select()
+        .eq('postId', postId).eq('userId', userId).maybeSingle()
 
     // console.log('data: ', data);
 
@@ -188,10 +207,15 @@ export async function getUserPostBookmark(postId : string) {
 
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
+    // const { data, error } = await supabase
+    //     .from('posts')
+    //     .select('*, bookmarks!inner(postId)')
+    //     .eq('bookmarks.postId', postId).eq('bookmarks.userId', userId).maybeSingle()
+
     const { data, error } = await supabase
-        .from('posts')
-        .select('*, bookmarks!inner(postId)')
-        .eq('bookmarks.postId', postId).eq('bookmarks.userId', userId).maybeSingle()
+        .from('bookmarks')
+        .select('')
+        .eq('postId', postId).eq('userId', userId).maybeSingle()
 
     // console.log('data: ', data);
 
@@ -207,10 +231,15 @@ export async function getLikedPosts() {
 
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
+    // const { data, error } = await supabase
+    //     .from('posts')
+    //     .select('*, uniquelikes!inner(postId)')
+    //     .eq('uniquelikes.userId', userId)
+
     const { data, error } = await supabase
-        .from('posts')
-        .select('*, uniquelikes!inner(postId)')
-        .eq('uniquelikes.userId', userId)
+        .from('uniquelikes')
+        .select()
+        .eq('userId', userId)
 
     // console.log('data: ', data);
 
@@ -218,18 +247,54 @@ export async function getLikedPosts() {
         console.log(error);
     }
 
-    return ({ data, error })
+    const idArray = data?.map((item) => item.postId) || []
+
+    const client = createPrismicClient()
+
+    const posts = await client.getAllByType('post', {
+        filters: [
+            prismic.filter.in( 'document.id', idArray )
+          ]
+    })
+
+    // return ({ data, error })
+
+    return posts
 }
+
+// export async function getBookmarkedPosts() {
+//     const { userId } = auth()
+
+//     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
+
+//     const { data, error } = await supabase
+//         .from('posts')
+//         .select('*, bookmarks!inner(postId)')
+//         .eq('bookmarks.userId', userId)
+
+//     // console.log('data: ', data);
+
+//     if (error) {
+//         console.log(error);
+//     }
+
+//     return ({ data, error })
+// }
 
 export async function getBookmarkedPosts() {
     const { userId } = auth()
 
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
+    // const { data, error } = await supabase
+    //     .from('posts')
+    //     .select('*, uniquelikes!inner(postId)')
+    //     .eq('uniquelikes.userId', userId)
+
     const { data, error } = await supabase
-        .from('posts')
-        .select('*, bookmarks!inner(postId)')
-        .eq('bookmarks.userId', userId)
+        .from('bookmarks')
+        .select()
+        .eq('userId', userId)
 
     // console.log('data: ', data);
 
@@ -237,7 +302,19 @@ export async function getBookmarkedPosts() {
         console.log(error);
     }
 
-    return ({ data, error })
+    const idArray = data?.map((item) => item.postId) || []
+
+    const client = createPrismicClient()
+
+    const posts = await client.getAllByType('post', {
+        filters: [
+            prismic.filter.in( 'document.id', idArray )
+          ]
+    })
+
+    // return ({ data, error })
+
+    return posts
 }
 
 
