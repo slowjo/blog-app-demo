@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a blog app demo built with Next.js, Tailwind CSS, Prismic, Supabase and Clerk.
 
 ## Getting Started
 
