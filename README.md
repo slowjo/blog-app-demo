@@ -8,7 +8,7 @@ The app allows the admin to publish blog posts via Prismic. Users can read posts
 
 To make a clone of this code work, these steps are necessary:
 
-- Create a Prismic account and in the cloned code's directory run `npx @slicemachine/init@latest` in your terminal, and select 'new project'.
+- Create a Prismic account and in the cloned code's directory run `npx @slicemachine/init@latest` in your terminal, and select 'new project'. Follow Prismic's guide on adding webhooks to trigger deployment when your content changes.
 - Create a Supabase account, create a new Supabase project and create these tables:
 ```
 create table
