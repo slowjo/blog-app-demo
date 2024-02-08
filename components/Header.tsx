@@ -3,7 +3,7 @@ import { SignInButton, SignUpButton, UserButton, auth } from "@clerk/nextjs";
 import { Button, Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from 'flowbite-react';
 import Image from "next/image";
 import Link from "next/link";
-import { HiOutlineUser, HiBookmark, HiHome, HiLogin } from 'react-icons/hi';
+import { HiOutlineUser, HiBookmark, HiHome, HiLogin, HiDocumentText } from 'react-icons/hi';
 
 export default async function NewHeader() {
     // const { data, error } = await getBookmarkedPosts()
@@ -16,7 +16,8 @@ export default async function NewHeader() {
     return (
         <Navbar fluid rounded className="max-w-screen-2xl px-5 md:px-12 mx-auto">
         <NavbarBrand href="/" className="flex-1">
-            <Image src="/favicon.ico" width={37} height={37} className="mr-3 h-7 w-7 sm:h-9 sm:w-9" alt="Flowbite React Logo" />
+            {/* <Image src="/favicon.ico" width={37} height={37} className="mr-3 h-7 w-7 sm:h-9 sm:w-9" alt="Flowbite React Logo" /> */}
+            <HiDocumentText className="text-2xl mr-2" />
             <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">BlogApp</span>
         </NavbarBrand>
         <div className="flex md:order-2">
