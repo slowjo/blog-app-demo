@@ -1,4 +1,4 @@
-This is a blog app demo built with Next.js, Tailwind CSS, Prismic, Supabase and Clerk.
+This is a blog app demo built with Next.js, Tailwind CSS, Flowbite, Prismic, Supabase and Clerk.
 
 ## Description
 
