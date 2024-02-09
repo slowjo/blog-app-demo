@@ -66,7 +66,7 @@ export default function MarkButton({ isMarked, postId, guest, markAs } : MarkBut
     }
 
     return(
-        <Tooltip content={markAs === 'like' ? 'Like this post' : 'Add this post to your reading list'}>
+        <Tooltip content={markAs === 'like' ? isMarked ? 'Unlike this post' : 'Like this post' : isMarked ? 'Remove this post from your reading list' : 'Add this post to your reading list'}>
             <Button onClick={handleClick} size='lg' color='orange' className="bg-transparent text-gray-900 scale-95 hover:scale-100 transition-transform duration-100 w-10 h-10 rounded-full">
                 {/* <div className="flex items-center justify-start gap-2"> */}
                     {markedAtClient ? (
