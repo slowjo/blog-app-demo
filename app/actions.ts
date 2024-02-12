@@ -316,3 +316,7 @@ export async function getBookmarkedPosts() {
 
     return posts
 }
+
+export async function revalidatePathFromClient() {
+    revalidatePath('/')
+}
