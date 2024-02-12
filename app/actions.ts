@@ -316,5 +316,3 @@ export async function getBookmarkedPosts() {
 
     return posts
 }
-
-
