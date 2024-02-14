@@ -12,6 +12,12 @@ const nextConfig = {
             port: '',
             // pathname: '/my-bucket/**',
           },
+          {
+            protocol: 'https',
+            hostname: 'images.prismic.io',
+            port: '',
+            // pathname: '/my-bucket/**',
+          },
         ],
       },
 }
