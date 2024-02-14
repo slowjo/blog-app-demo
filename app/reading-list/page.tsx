@@ -1,6 +1,6 @@
 import { getBookmarkedPosts } from "@/app/actions"
 import HorizontalCard from "@/components/HorizontalCard"
-import UnmarkButton from "@/components/UnmarkButton"
+
 
 export default async function BookmarkedPostsPage () {
     // const { data, error } = await getBookmarkedPosts()
