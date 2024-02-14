@@ -1,11 +1,9 @@
 import { getPosts } from "@/app/actions";
 import HorizontalCard from "./HorizontalCard";
 import VerticalCard from "./VerticalCard";
-import { unstable_noStore } from "next/cache";
 
 export default async function HeroGrid() {
     // const { data, error } = await getPosts()
-    // unstable_noStore()
     const data = await getPosts()
 
     return (
