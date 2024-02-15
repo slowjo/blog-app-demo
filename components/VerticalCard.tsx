@@ -5,6 +5,7 @@ import { HiOutlineBookmark, HiOutlineStar, HiStar } from 'react-icons/hi';
 import MarkButton from "@/components/MarkButton";
 import { PrismicDocumentWithUID } from "@prismicio/client";
 import { PostDocumentData, Simplify } from "@/prismicio-types";
+import getImage from "@/utils/getImage";
 
 
 type CardProps = {
@@ -22,10 +23,12 @@ export default async function VerticalCard({ post } : { post : PrismicDocumentWi
 
     const { data : bookmarkData, error : bookMarkError, guest : bookMarkGuest } = await getUserPostBookmark(post.id)
 
+    const { base64 : blurredImage } = await getImage(post.data.preview_image.url || '')
+
     return (
-        <div className="p-4 mb-4 md:mb-0 flex flex-col md:col-span-6 md:row-span-3 bg-orange-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+        <div className="p-4 mb-4 md:mb-0 flex flex-col md:col-span-6 md:row-span-3 bg-orange-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 fade-in">
             <Link href={`/${post.uid}`} className="relative w-full h-full overflow-clip rounded-lg">
-                <Image priority height={900} width={600} className="rounded-lg md:absolute inset-0 md:min-h-full min-w-full hover:scale-105 transition-transform duration-1000 object-cover max-h-56 md:max-h-none md:w-auto md:h-auto" src={post.data.preview_image.url || ''} alt={post.data.preview_image.alt || ''} />
+                <Image priority fill={true} placeholder="blur" blurDataURL={blurredImage} className="rounded-lg md:absolute inset-0 md:min-h-full min-w-full hover:scale-105 transition-transform duration-1000 object-cover max-h-56 md:max-h-none md:w-auto md:h-auto" src={post.data.preview_image.url || ''} alt={post.data.preview_image.alt || ''} />
                 <span className="bg-white text-gray-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-400 absolute top-5 right-5">
                     <HiStar />
                     {count && (

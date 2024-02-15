@@ -13,6 +13,7 @@
   "dependencies": {
     "@clerk/nextjs": "^4.29.3",
     "@next/bundle-analyzer": "^14.1.0",
+    "@plaiceholder/next": "^3.0.0",
     "@prismicio/client": "^7.3.1",
     "@prismicio/next": "^1.5.0",
     "@prismicio/react": "^2.7.3",
@@ -20,9 +21,11 @@
     "flowbite": "^2.2.1",
     "flowbite-react": "^0.7.2",
     "next": "14.0.4",
+    "plaiceholder": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-icons": "^5.0.1"
+    "react-icons": "^5.0.1",
+    "sharp": "^0.29.3"
   },
   "devDependencies": {
     "@slicemachine/adapter-next": "^0.3.34",
