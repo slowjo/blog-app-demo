@@ -29,8 +29,8 @@ export default async function HorizontalCard({ post } : { post : PrismicDocument
 
     return (
         <div className="md:col-span-6 md:col-start-7 p-4 flex gap-5 flex-col items-center bg-white rounded-lg md:flex-row dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative fade-in">
-            <Link href={`/${post.uid}`} className="relative w-full h-full overflow-clip rounded-lg basis-full">
-                <Image fill={true} placeholder="blur" blurDataURL={blurredImage} src={post.data.preview_image.url || ''} alt={post.data.preview_image.alt || ''} className="rounded-lg object-cover md:absolute inset-0 max-h-56 md:max-h-none min-w-full min-h-full w-auto h-auto hover:scale-110 transition-transform duration-1000" />
+            <Link href={`/${post.uid}`} className="relative h-48 w-full md:h-full md:overflow-clip rounded-lg md:basis-full">
+                <Image fill={true} placeholder="blur" blurDataURL={blurredImage} src={post.data.preview_image.url || ''} alt={post.data.preview_image.alt || ''} className="rounded-lg object-cover md:absolute inset-0 max-h-56 md:max-h-none min-w-full min-h-full w-full h-48 md:w-auto md:h-auto hover:scale-110 transition-transform duration-1000" />
                 <span className="bg-white text-gray-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-400 absolute top-5 right-5">
                     <HiStar />
                     {count && (
