@@ -1,13 +1,35 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PrismicRichText, SliceZone } from "@prismicio/react";
+import { JSXMapSerializer, PrismicRichText, SliceZone } from "@prismicio/react";
 
 import { createClient } from "@/prismicio";
-import { components } from "@/slices";
+// import { components } from "@/slices";
 import { getUserPostBookmark, getUserPostLike } from "../actions";
 import MarkButton from "@/components/MarkButton";
+import Image from "next/image";
 
 type Params = { uid: string };
+
+const components: JSXMapSerializer = {
+  // heading2: ({ children }) => (
+  //   <Heading as="h2" size="md" className="text-center mb-12">
+  //     {children}
+  //   </Heading>
+  // ),
+  // heading3: ({ children }) => (
+  //   <Heading as="h3" size="sm" className="mb-3 font-medium sm:text-left text-center">
+  //     {children}
+  //   </Heading>
+  // ),
+  // paragraph: ({ children }) => (
+  //   <p className="text-base font-medium font-body text-slate-600 sm:text-left text-center">
+  //     {children}
+  //   </p>
+  // ),
+  image: ({ node }) => (
+    <Image src={node.url} width={node.dimensions.width} height={node.dimensions.height} alt={node.alt || ''} className="fade-in" />
+  )
+}
 
 export default async function Page({ params }: { params: Params }) {
     const client = createClient();
@@ -31,7 +53,7 @@ export default async function Page({ params }: { params: Params }) {
                     {/* <p className="text-sm text-slate-300">Liked: {data ? 'Yes' : 'No'}</p> */}
                 </div>
                 <h1>{page.data.title}</h1>
-                <PrismicRichText field={page.data.textandimages} />
+                <PrismicRichText field={page.data.textandimages} components={components} />
             </article>
         </main>
     )
