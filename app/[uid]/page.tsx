@@ -4,28 +4,13 @@ import { JSXMapSerializer, PrismicRichText, SliceZone } from "@prismicio/react";
 
 import { createClient } from "@/prismicio";
 // import { components } from "@/slices";
-import { getUserPostBookmark, getUserPostLike } from "../actions";
+import { getPostLikes, getUserPostBookmark, getUserPostLike } from "../actions";
 import MarkButton from "@/components/MarkButton";
 import Image from "next/image";
 
 type Params = { uid: string };
 
 const components: JSXMapSerializer = {
-  // heading2: ({ children }) => (
-  //   <Heading as="h2" size="md" className="text-center mb-12">
-  //     {children}
-  //   </Heading>
-  // ),
-  // heading3: ({ children }) => (
-  //   <Heading as="h3" size="sm" className="mb-3 font-medium sm:text-left text-center">
-  //     {children}
-  //   </Heading>
-  // ),
-  // paragraph: ({ children }) => (
-  //   <p className="text-base font-medium font-body text-slate-600 sm:text-left text-center">
-  //     {children}
-  //   </p>
-  // ),
   image: ({ node }) => (
     <Image src={node.url} width={node.dimensions.width} height={node.dimensions.height} alt={node.alt || ''} className="fade-in" />
   )
@@ -39,6 +24,8 @@ export default async function Page({ params }: { params: Params }) {
 
     const { data, error, guest } = await getUserPostLike(page.id)
 
+    const { count, error : allLikesError } = await getPostLikes(page.id)
+
     const { data : bookmarkData, error : bookMarkError, guest : bookMarkGuest } = await getUserPostBookmark(page.id)
 
 //   return <SliceZone slices={page.data.slices} components={components} />;
@@ -49,7 +36,7 @@ export default async function Page({ params }: { params: Params }) {
                 <div className="not-prose flex justify-end gap-5">
                     <MarkButton postId={page.id} isMarked={bookmarkData ? true : false} guest={guest} markAs={'bookmark'} />
                     {/* <p className="text-sm text-slate-300">Bookmarked: {bookmarkData ? 'Yes' : 'No'}</p> */}
-                    <MarkButton postId={page.id} isMarked={data ? true : false} guest={guest} markAs={'like'} />
+                    <MarkButton postId={page.id} isMarked={data ? true : false} guest={guest} markAs={'like'} count={count} />
                     {/* <p className="text-sm text-slate-300">Liked: {data ? 'Yes' : 'No'}</p> */}
                 </div>
                 <h1>{page.data.title}</h1>

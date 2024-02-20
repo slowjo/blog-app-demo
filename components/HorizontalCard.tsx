@@ -8,14 +8,6 @@ import { PostDocumentData, Simplify } from "@/prismicio-types";
 import getImage from "@/utils/getImage";
 
 
-type CardProps = {
-    post: {
-        id: string,
-        created_at: string,
-        title: string,
-    },
-}
-
 export default async function HorizontalCard({ post } : { post : PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", string> }) {
     const { count, error : allLikesError } = await getPostLikes(post.id)
 

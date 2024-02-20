@@ -6,6 +6,7 @@ import useReactiveMarkState from "@/hooks/useReactiveMarkState"
 import { useRouter } from "next/navigation"
 import { Button } from "flowbite-react"
 import { Tooltip } from 'flowbite-react';
+import { getPostLikes } from "@/app/actions"
 
 
 type MarkButtonProps = {
@@ -13,6 +14,7 @@ type MarkButtonProps = {
     isMarked: boolean,
     guest: boolean | undefined,
     markAs: string,
+    count?: number | null,
 }
 
 const UnMarkedIcon = ({ markAs } : { markAs : string }) => {
@@ -51,7 +53,7 @@ const MarkedIcon = ({ markAs } : { markAs : string }) => {
     )
 }
 
-export default function MarkButton({ isMarked, postId, guest, markAs } : MarkButtonProps) {
+export default function MarkButton({ isMarked, postId, guest, markAs, count } : MarkButtonProps) {
     const { markedAtClient, handleMarkClick } = useReactiveMarkState(isMarked, postId, markAs)
 
     const router = useRouter()
@@ -70,9 +72,15 @@ export default function MarkButton({ isMarked, postId, guest, markAs } : MarkBut
             <Button onClick={handleClick} size='lg' color='orange' className="bg-transparent text-gray-900 scale-95 hover:scale-100 transition-transform duration-100 w-10 h-10 rounded-full">
                 {/* <div className="flex items-center justify-start gap-2"> */}
                     {markedAtClient ? (
-                        <MarkedIcon markAs={markAs} />
+                        <>
+                            <MarkedIcon markAs={markAs} />
+                            {count ? <div className="ml-1">{count}</div> : null}
+                        </>
                     ) : (
-                        <UnMarkedIcon markAs={markAs} />
+                        <>
+                            <UnMarkedIcon markAs={markAs} />
+                            {count ? <div className="ml-1">{count}</div> : null}
+                        </>
                     )}
                 {/* </div> */}
             </Button>        
