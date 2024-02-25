@@ -10,13 +10,9 @@ export default async function BookmarkedPostsPage () {
 
     return (
         <main className="flex flex-col items-center justify-between p-5 md:p-24">
-            <ul>
+            <ul className="md:grid max-w-2xl w-full">
                 {data && data.map((post) => (
-                    <li key={post.id} className="md:flex max-w-lg w-full">
-                        <HorizontalCard post={post} />
-                        {/* <h3>{post.data.title}</h3>
-                        <UnmarkButton postId={post.id} markedAs={'bookmark'} /> */}
-                    </li>
+                    <HorizontalCard post={post} key={post.id} />
                 ))}
             </ul>
         </main>
