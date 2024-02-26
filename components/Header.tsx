@@ -14,7 +14,7 @@ export default async function NewHeader() {
     const { userId } = auth();
 
     return (
-        <Navbar fluid rounded className="max-w-screen-2xl px-5 md:px-12 mx-auto">
+        <Navbar fluid rounded className="max-w-screen-2xl px-5 md:px-12 mx-auto md:min-h-14">
         <NavbarBrand href="/" className="flex-1">
             {/* <Image src="/favicon.ico" width={37} height={37} className="mr-3 h-7 w-7 sm:h-9 sm:w-9" alt="Flowbite React Logo" /> */}
             <HiDocumentText className="text-2xl mr-2" />
