@@ -41,7 +41,7 @@ export default async function VerticalCard({ post } : { post : PrismicDocumentWi
                     <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.data.title}</h3>
                 </Link>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{post.data.preview_text}</p>
-                <div className="flex justify-between md:justify-start items-center md:gap-5">
+                <div className="flex items-center gap-5">
                     <MarkButton postId={post.id} isMarked={bookmarkData ? true : false} guest={guest} markAs={'bookmark'} />
                     {/* <p className="text-sm text-slate-300">Bookmarked: {bookmarkData ? 'Yes' : 'No'}</p> */}
                     <MarkButton postId={post.id} isMarked={data ? true : false} guest={guest} markAs={'like'} count={count} />   
