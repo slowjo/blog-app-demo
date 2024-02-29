@@ -141,6 +141,29 @@ export async function getPosts() {
     }
 }
 
+export async function getPostsPreview() {
+    const client = createPrismicClient()
+
+    try {
+        const documents = await client.getAllByType('post', {
+            graphQuery: `
+              {
+                post {
+                  uid
+                  title
+                  preview_text
+                  preview_image
+                }
+              }
+            `
+          })
+        console.log(documents[0].data.preview_image)
+        return documents
+    } catch(error) {
+        console.log(error);
+    }
+}
+
 export async function getPostLikes(postId : string) {
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
