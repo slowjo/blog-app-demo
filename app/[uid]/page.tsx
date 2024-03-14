@@ -35,7 +35,7 @@ export default function Page({ params }: { params: Params }) {
 
     return (
         <main className="p-5 md:p-20">
-          <Suspense fallback={<div className="mx-auto max-w-lg"><HorizontalLoadingCard /></div>}>
+          <Suspense fallback={<div className="grid mx-auto max-w-lg"><HorizontalLoadingCard /></div>}>
             <Article articleUid={params.uid} />
           </Suspense>
             {/* <article className="prose prose-img:rounded-xl mx-auto">
