@@ -28,7 +28,13 @@ export default async function Article({ articleUid } : { articleUid : string }) 
 
     const firstImage : any = getFirstImage(images);
 
-    const { base64 : blurredImage } = await getImage(firstImage.url || '');
+    let blurredImage = '';
+    try {
+        const { base64 } = await getImage(firstImage?.url || '');
+        blurredImage = base64;
+    } catch (err) {
+        console.log(err);
+    }
     
     const { data, error, guest } = await getUserPostLike(page.id)
 
