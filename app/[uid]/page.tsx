@@ -7,41 +7,45 @@ import { createClient } from "@/prismicio";
 import { getPostLikes, getUserPostBookmark, getUserPostLike } from "../actions";
 import MarkButton from "@/components/MarkButton";
 import Image from "next/image";
+import Article from "@/components/Article";
+import { Suspense } from "react";
+import HorizontalLoadingCard from "@/components/HorizontalLoadingCard";
 
 type Params = { uid: string };
 
-const components: JSXMapSerializer = {
-  image: ({ node }) => (
-    <Image src={node.url} width={node.dimensions.width} height={node.dimensions.height} alt={node.alt || ''} className="fade-in" />
-  )
-}
+// const components: JSXMapSerializer = {
+//   image: ({ node }) => (
+//     <Image src={node.url} width={node.dimensions.width} height={node.dimensions.height} alt={node.alt || ''} className="fade-in" />
+//   )
+// }
 
-export default async function Page({ params }: { params: Params }) {
-    const client = createClient();
-    const page = await client
-    .getByUID("post", params.uid)
-    .catch(() => notFound());
+export default function Page({ params }: { params: Params }) {
+    // const client = createClient();
+    // const page = await client
+    // .getByUID("post", params.uid)
+    // .catch(() => notFound());
 
-    const { data, error, guest } = await getUserPostLike(page.id)
+    // const { data, error, guest } = await getUserPostLike(page.id)
 
-    const { count, error : allLikesError } = await getPostLikes(page.id)
+    // const { count, error : allLikesError } = await getPostLikes(page.id)
 
-    const { data : bookmarkData, error : bookMarkError, guest : bookMarkGuest } = await getUserPostBookmark(page.id)
+    // const { data : bookmarkData, error : bookMarkError, guest : bookMarkGuest } = await getUserPostBookmark(page.id)
 
 //   return <SliceZone slices={page.data.slices} components={components} />;
 
     return (
         <main className="p-5 md:p-20">
-            <article className="prose prose-img:rounded-xl mx-auto">
+          <Suspense fallback={<div className="mx-auto max-w-lg"><HorizontalLoadingCard /></div>}>
+            <Article articleUid={params.uid} />
+          </Suspense>
+            {/* <article className="prose prose-img:rounded-xl mx-auto">
                 <div className="not-prose flex justify-end gap-5">
                     <MarkButton postId={page.id} isMarked={bookmarkData ? true : false} guest={guest} markAs={'bookmark'} />
-                    {/* <p className="text-sm text-slate-300">Bookmarked: {bookmarkData ? 'Yes' : 'No'}</p> */}
                     <MarkButton postId={page.id} isMarked={data ? true : false} guest={guest} markAs={'like'} count={count} />
-                    {/* <p className="text-sm text-slate-300">Liked: {data ? 'Yes' : 'No'}</p> */}
                 </div>
                 <h1>{page.data.title}</h1>
                 <PrismicRichText field={page.data.textandimages} components={components} />
-            </article>
+            </article> */}
         </main>
     )
 }
