@@ -4,16 +4,18 @@ import { createClient } from "@/prismicio";
 // import { components } from "@/slices";
 import Article from "@/components/Article";
 import { Suspense } from "react";
-// import HorizontalLoadingCrd from "@/components/HorizontalLoadingCard";
+import ArticleLoadingState from "@/components/ArticleLoadingState";
+
 
 type Params = { uid: string };
 
 export default function Page({ params }: { params: Params }) {
     return (
         <main className="p-5 md:p-20">
-          {/* <Suspense fallback={<div className="grid mx-auto max-w-lg"><HorizontalLoadingCard /></div>}>
+          <Suspense fallback={<ArticleLoadingState />}>
             <Article articleUid={params.uid} />
-          </Suspense> */}
+          </Suspense>
+          {/* <ArticleLoadingState /> */}
         </main>
     )
 }
