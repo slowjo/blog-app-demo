@@ -8,6 +8,7 @@ import MarkButton from "@/components/MarkButton";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import getImage from "@/utils/getImage";
+import { Suspense } from "react";
 
 
 function isImage(item: RTNode): item is RTImageNode {
@@ -28,6 +29,8 @@ export default async function Article({ articleUid } : { articleUid : string }) 
 
     const firstImage : any = getFirstImage(images);
 
+    // console.log('pagedata: ', page.data);
+
     let blurredImage = '';
     try {
         const { base64 } = await getImage(firstImage?.url || '');
@@ -45,7 +48,7 @@ export default async function Article({ articleUid } : { articleUid : string }) 
 
     const components: JSXMapSerializer = {
         image: ({ node }) => (
-          <Image src={node.url} placeholder="blur" blurDataURL={blurredImage} width={node.dimensions.width} height={node.dimensions.height} alt={node.alt || ''} className="fade-in" />
+            <Image src={node.url} placeholder="blur" blurDataURL={blurredImage} width={node.dimensions.width} height={node.dimensions.height} alt={node.alt || ''} className="fade-in" /> 
         )
       }
 

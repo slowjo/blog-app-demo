@@ -1,11 +1,11 @@
 import { getPostLikes, getUserPostBookmark, getUserPostLike } from "@/app/actions";
-import Image from "next/image";
 import Link from "next/link";
 import { HiOutlineBookmark, HiOutlineStar, HiStar } from 'react-icons/hi';
 import MarkButton from "@/components/MarkButton";
 import { PrismicDocumentWithUID } from "@prismicio/client";
 import { PostDocumentData, Simplify } from "@/prismicio-types";
 import getImage from "@/utils/getImage";
+import CardImage from "@/components/CardImage";
 
 
 export default async function HorizontalCard({ post } : { post : PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", string> }) {
@@ -15,14 +15,14 @@ export default async function HorizontalCard({ post } : { post : PrismicDocument
 
     const { data : bookmarkData, error : bookMarkError, guest : bookMarkGuest } = await getUserPostBookmark(post.id)
     
-    const { base64 : blurredImage } = await getImage(post.data.preview_image.url || '')
+    const { base64 } = await getImage(post.data.preview_image.url || '')
 
-    console.log('blurred image: ', blurredImage)
+    // console.log('blurred image: ', base64)
 
     return (
         <li className="md:col-span-6 md:col-start-7 p-4 flex gap-5 flex-col items-center bg-white rounded-lg md:flex-row dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative fade-in">
             <Link href={`/${post.uid}`} className="relative h-48 w-full md:h-full overflow-clip rounded-lg md:basis-full">
-                <Image fill={true} placeholder="blur" blurDataURL={blurredImage} src={post.data.preview_image.url || ''} alt={post.data.preview_image.alt || ''} className="rounded-lg object-cover md:absolute inset-0 max-h-56 md:max-h-none min-w-full min-h-full w-full h-48 md:w-auto md:h-auto hover:scale-110 transition-transform duration-1000" />
+                <CardImage base64={base64} cardType="horizontal" src={post.data.preview_image.url || ""} alt={post.data.preview_image.alt || ""} width={post.data.preview_image.dimensions?.width || 200} height={post.data.preview_image.dimensions?.height || 200} />
                 {/* <span className="bg-white text-gray-800 text-sm font-medium inline-flex items-center px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-400 absolute top-5 right-5">
                     <HiStar />
                     {count && (

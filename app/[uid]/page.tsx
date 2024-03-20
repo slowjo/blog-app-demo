@@ -12,9 +12,9 @@ type Params = { uid: string };
 export default function Page({ params }: { params: Params }) {
     return (
         <main className="p-5 md:p-20">
-          <Suspense fallback={<ArticleLoadingState />}>
+          {/* <Suspense fallback={<ArticleLoadingState />}> */}
             <Article articleUid={params.uid} />
-          </Suspense>
+          {/* </Suspense> */}
           {/* <ArticleLoadingState /> */}
         </main>
     )

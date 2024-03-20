@@ -141,6 +141,18 @@ export async function getPosts() {
     }
 }
 
+export async function getSinglePost(postUid : string) {
+    const client = createPrismicClient()
+
+    try {
+        const post = await client.getByUID('post', postUid)
+        console.log(post.data.preview_image)
+        return post
+    } catch(error) {
+        console.log(error);
+    }
+}
+
 export async function getPostsPreview() {
     const client = createPrismicClient()
 

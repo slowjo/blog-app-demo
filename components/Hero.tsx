@@ -7,9 +7,9 @@ export default function Hero() {
     return (
         <>
             <HeroText />
-            <Suspense fallback={<HeroGridLoadingState />}>
+            {/* <Suspense fallback={<HeroGridLoadingState />}> */}
                 <HeroGrid />
-            </Suspense>
+            {/* </Suspense> */}
         </>
     )
 }
