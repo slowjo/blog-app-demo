@@ -1,20 +1,13 @@
-import { getPostLikes, getUserPostBookmark, getUserPostLike } from "@/app/actions";
 import Link from "next/link";
 import { HiOutlineBookmark, HiOutlineStar, HiStar } from 'react-icons/hi';
-import MarkButton from "@/components/MarkButton";
 import { PrismicDocumentWithUID } from "@prismicio/client";
 import { PostDocumentData, Simplify } from "@/prismicio-types";
 import getImage from "@/utils/getImage";
 import CardImage from "@/components/CardImage";
+import MarkButtonDataWrapper from "@/components/MarkButtonDataWrapper";
 
 
 export default async function HorizontalCard({ post } : { post : PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", string> }) {
-    const { count, error : allLikesError } = await getPostLikes(post.id)
-
-    const { data, error, guest } = await getUserPostLike(post.id)
-
-    const { data : bookmarkData, error : bookMarkError, guest : bookMarkGuest } = await getUserPostBookmark(post.id)
-    
     const { base64 } = await getImage(post.data.preview_image.url || '')
 
     // console.log('blurred image: ', base64)
@@ -36,9 +29,11 @@ export default async function HorizontalCard({ post } : { post : PrismicDocument
                 </Link>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{post.data.preview_text}</p>
                 <div className="flex gap-5">
-                    <MarkButton postId={post.id} isMarked={bookmarkData ? true : false} guest={guest} markAs={'bookmark'} />
+                    <MarkButtonDataWrapper postId={post.id} markAs="bookmark" />
+                    <MarkButtonDataWrapper postId={post.id} markAs="like" />
+                    {/* <MarkButton postId={post.id} isMarked={bookmarkData ? true : false} guest={guest} markAs={'bookmark'} /> */}
                     {/* <p className="text-sm text-slate-300">Bookmarked: {bookmarkData ? 'Yes' : 'No'}</p> */}
-                    <MarkButton postId={post.id} isMarked={data ? true : false} guest={guest} markAs={'like'} count={count} />
+                    {/* <MarkButton postId={post.id} isMarked={data ? true : false} guest={guest} markAs={'like'} count={count} /> */}
                     {/* <p className="text-sm text-slate-300">Liked: {data ? 'Yes' : 'No'}</p> */}
                 </div>
             </div>
