@@ -5,6 +5,7 @@ import getImage from "@/utils/getImage";
 import CardImage from '@/components/CardImage';
 import MarkButtonDataWrapper from "./MarkButtonDataWrapper";
 import { Suspense } from "react";
+import MarkButtonLoadingState from "@/components/MarkButtonLoadingState";
 
 
 export default async function VerticalCard({ post } : { post : PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", string> }) {
@@ -21,7 +22,7 @@ export default async function VerticalCard({ post } : { post : PrismicDocumentWi
                 </Link>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{post.data.preview_text}</p>
                 <div className="flex items-center gap-5">
-                    <Suspense fallback={<div>loading...</div>}>
+                    <Suspense fallback={<MarkButtonLoadingState />}>
                         <MarkButtonDataWrapper postId={post.id} markAs="bookmark" />
                         <MarkButtonDataWrapper postId={post.id} markAs="like" />
                     </Suspense>

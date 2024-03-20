@@ -1,12 +1,10 @@
 'use client'
 
-// import { FaRegStar, FaStar, FaRegBookmark, FaBookmark } from "react-icons/fa"
 import { HiStar, HiOutlineStar, HiBookmark, HiOutlineBookmark } from "react-icons/hi"
 import useReactiveMarkState from "@/hooks/useReactiveMarkState"
 import { useRouter } from "next/navigation"
 import { Button } from "flowbite-react"
 import { Tooltip } from 'flowbite-react';
-import { getPostLikes } from "@/app/actions"
 
 
 type MarkButtonProps = {
