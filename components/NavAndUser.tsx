@@ -34,18 +34,29 @@ export default async function NavAndUser() {
             <NavbarToggle className="bg-white hover:bg-white -mr-2" />
             </div>
             <NavbarCollapse className="md:mr-9">
-                <NavbarLink href="/" className="flex items-center rounded-lg hover:text-orange-400 active:text-orange-400">
+                {/* <NavbarLink href="/" className="flex items-center rounded-lg hover:text-orange-400 active:text-orange-400">
                     <HiHome className="text-lg" />
                     Home
-                </NavbarLink>
+                </NavbarLink> */}
+                <Link href="/" className="flex items-center rounded-lg hover:text-orange-400 active:text-orange-400">
+                    <HiHome className="text-lg" />
+                    Home
+                </Link>
                 {userId ? (
-                    <NavbarLink href="/reading-list" className="flex items-center relative rounded-lg hover:text-orange-400 active:text-orange-400">
+                    <Link href="/reading-list" className="flex items-center relative rounded-lg hover:text-orange-400 active:text-orange-400">
                         <HiBookmark className="text-lg" />
                         Reading list
                         {data && data.length > 0 ? (
                             <div className="md:absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-orange-500 border-2 border-white rounded-full md:-top-3 md:-end-5 dark:border-gray-900">{data?.length}</div>
                         ) : null}
-                    </NavbarLink>
+                    </Link>
+                    // <NavbarLink href="/reading-list" className="flex items-center relative rounded-lg hover:text-orange-400 active:text-orange-400">
+                    //     <HiBookmark className="text-lg" />
+                    //     Reading list
+                    //     {data && data.length > 0 ? (
+                    //         <div className="md:absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-orange-500 border-2 border-white rounded-full md:-top-3 md:-end-5 dark:border-gray-900">{data?.length}</div>
+                    //     ) : null}
+                    // </NavbarLink>
                 ) : (
                     <NavbarLink href="/sign-in" className="flex items-center hover:text-orange-400 active:text-orange-400">
                         <HiLogin className="text-lg" />
