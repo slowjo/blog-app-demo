@@ -14,7 +14,7 @@ export default async function VerticalCard({ post } : { post : PrismicDocumentWi
                 <CardImage cardType="vertical" src={post.data.preview_image.url || ""} alt={post.data.preview_image.alt || ""} width={post.data.preview_image.dimensions?.width || 200} height={post.data.preview_image.dimensions?.height || 200} />
             </Link>
             <div className="p-5">
-                <Link href="{`/${post.uid}`}">
+                <Link href={`/${post.uid}`}>
                     <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.data.title}</h3>
                 </Link>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{post.data.preview_text}</p>
