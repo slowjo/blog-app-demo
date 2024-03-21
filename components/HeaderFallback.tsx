@@ -9,7 +9,8 @@ export default function HeaderFallback() {
             <div className="flex md:order-2">
             <div className="flex items-center mr-3">
                 <Link href="/sign-up">
-                    <Button pill color='orange' className="bg-orange-200 hover:bg-orange-300 text-gray-900" >
+                    {/* <Button pill color='orange' className="bg-orange-200 hover:bg-orange-300 text-gray-900" > */}
+                    <Button pill color='orange' className="bg-green-300 hover:bg-orange-300 text-gray-900" >
                         <HiOutlineUser className="text-lg" />
                         Sign up
                     </Button>

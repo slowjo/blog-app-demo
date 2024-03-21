@@ -11,7 +11,7 @@ export default async function NewHeader() {
             <HiDocumentText className="text-2xl mr-2" />
             <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">BlogApp</span>
         </NavbarBrand>
-        <Suspense fallback={<div>loading...</div>}>
+        <Suspense fallback={<HeaderFallback />}>
             <NavAndUser />
         </Suspense>
         </Navbar>
