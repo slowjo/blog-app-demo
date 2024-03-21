@@ -3,7 +3,10 @@ import { SignInButton, SignUpButton, UserButton, auth } from "@clerk/nextjs";
 import { Button, Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from 'flowbite-react';
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import { HiOutlineUser, HiBookmark, HiHome, HiLogin, HiDocumentText } from 'react-icons/hi';
+import NavAndUser from "@/components/NavAndUser";
+import HeaderFallback from "@/components/HeaderFallback";
 
 export default async function NewHeader() {
     // const { data, error } = await getBookmarkedPosts()
@@ -16,21 +19,17 @@ export default async function NewHeader() {
     return (
         <Navbar fluid rounded className="max-w-screen-2xl px-5 md:px-12 mx-auto md:min-h-14">
         <NavbarBrand href="/" className="flex-1">
-            {/* <Image src="/favicon.ico" width={37} height={37} className="mr-3 h-7 w-7 sm:h-9 sm:w-9" alt="Flowbite React Logo" /> */}
             <HiDocumentText className="text-2xl mr-2" />
             <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">BlogApp</span>
         </NavbarBrand>
-        <div className="flex md:order-2">
-            {/* <Button pill color='orange' className="bg-orange-200 hover:bg-orange-300 text-gray-900" >
-                <HiOutlineUser className="text-lg" />
-                Sign up
-            </Button> */}
+        <Suspense fallback={<div>loading...</div>}>
+            <NavAndUser />
+        </Suspense>
+        {/* <div className="flex md:order-2">
             <div className="flex items-center mr-3">
             {userId ? (
                     <UserButton afterSignOutUrl="/" />
                 ) : <>
-                        {/* <SignInButton /> */}
-                        {/* <SignUpButton /> */}
                         <Link href="/sign-up">
                             <Button pill color='orange' className="bg-orange-200 hover:bg-orange-300 text-gray-900" >
                                 <HiOutlineUser className="text-lg" />
@@ -61,10 +60,7 @@ export default async function NewHeader() {
                     Sign in
                 </NavbarLink>
             )}
-            {/* <NavbarLink href="#">Services</NavbarLink>
-            <NavbarLink href="#">Pricing</NavbarLink>
-            <NavbarLink href="#">Contact</NavbarLink> */}
-        </NavbarCollapse>
+        </NavbarCollapse> */}
         </Navbar>
     )
 }
