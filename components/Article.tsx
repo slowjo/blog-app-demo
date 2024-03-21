@@ -5,19 +5,10 @@ import { createClient } from "@/prismicio";
 // import { components } from "@/slices";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import getImage from "@/utils/getImage";
 import { Suspense } from "react";
 import MarkButtonLoadingState from "./MarkButtonLoadingState";
 import MarkButtonDataWrapper from "./MarkButtonDataWrapper";
 
-
-function isImage(item: RTNode): item is RTImageNode {
-    return "url" in item;
-}
-
-function getFirstImage(images : RTNode[]) : RTNode {
-    return images[0];
-}
 
 export default async function Article({ articleUid } : { articleUid : string }) {
     const client = createClient();
@@ -25,25 +16,9 @@ export default async function Article({ articleUid } : { articleUid : string }) 
     .getByUID("post", articleUid)
     .catch(() => notFound());
 
-    // const images = page.data.textandimages.filter(isImage);
-
-    // const firstImage : any = getFirstImage(images);
-
-    // console.log('pagedata: ', page.data);
-
-    // let blurredImage = '';
-    // try {
-    //     const { base64 } = await getImage(firstImage?.url || '');
-    //     blurredImage = base64;
-    // } catch (err) {
-    //     console.log(err);
-    // }
-
-
     const components: JSXMapSerializer = {
         image: ({ node }) => (
-            <Image src={node.url} width={node.dimensions.width} height={node.dimensions.height} alt={node.alt || ''} className="fade-in" /> 
-            // <Image src={node.url} placeholder="blur" blurDataURL={blurredImage} width={node.dimensions.width} height={node.dimensions.height} alt={node.alt || ''} className="fade-in" /> 
+            <Image src={node.url} width={node.dimensions.width} height={node.dimensions.height} alt={node.alt || ''} className="fade-in" />  
         )
       }
 
