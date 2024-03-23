@@ -11,7 +11,7 @@ export default async function MarkButtonDataWrapper({ postId, markAs } : { postI
     return (
         <>
             {markAs === "like" ? (
-                <MarkButton postId={postId} isMarked={bookmarkData ? true : false} guest={guest} markAs={markAs} count={count} />
+                <MarkButton postId={postId} isMarked={data ? true : false} guest={guest} markAs={markAs} count={count} />
             ) : (
                 <MarkButton postId={postId} isMarked={bookmarkData ? true : false} guest={guest} markAs={markAs} />
             )}
