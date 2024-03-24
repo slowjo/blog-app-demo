@@ -5,9 +5,16 @@ import CardImage from "@/components/CardImage";
 import MarkButtonDataWrapper from "@/components/MarkButtonDataWrapper";
 import { Suspense } from "react";
 import MarkButtonLoadingState from "@/components/MarkButtonLoadingState";
+import MarkButton from "@/components/MarkButton";
 
 
-export default async function HorizontalCard({ post } : { post : PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", string> }) {
+type HorizontalCardProps = {
+    post : PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", string>;
+    client?: boolean;
+    like?: { like: boolean; count: number };
+}
+
+export default async function HorizontalCard({ post, client, like } : HorizontalCardProps) {
     return (
         <li className="md:col-span-6 md:col-start-7 p-4 flex gap-5 flex-col items-center bg-white rounded-lg md:flex-row dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative fade-in">
             <Link href={`/${post.uid}`} className="relative h-48 w-full md:h-full overflow-clip rounded-lg md:basis-full">
@@ -19,10 +26,17 @@ export default async function HorizontalCard({ post } : { post : PrismicDocument
                 </Link>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{post.data.preview_text}</p>
                 <div className="flex gap-5">
-                    <Suspense fallback={<MarkButtonLoadingState />}>
-                        <MarkButtonDataWrapper postId={post.id} markAs="bookmark" />
-                        <MarkButtonDataWrapper postId={post.id} markAs="like" />
-                    </Suspense>
+                    {client ? (
+                        <>
+                            <MarkButton postId={post.id} markAs="bookmark" guest={false} isMarked={true} />
+                            <MarkButton postId={post.id} markAs="like" guest={false} isMarked={like?.like || false} count={like?.count || 0} />
+                        </>
+                    ) : (
+                        <Suspense fallback={<MarkButtonLoadingState />}>
+                            <MarkButtonDataWrapper postId={post.id} markAs="bookmark" />
+                            <MarkButtonDataWrapper postId={post.id} markAs="like" />
+                        </Suspense>
+                    )}
                 </div>
             </div>
         </li>

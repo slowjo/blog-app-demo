@@ -1,7 +1,13 @@
 import { getPostLikes, getUserPostBookmark, getUserPostLike } from "@/app/actions"
 import MarkButton from "@/components/MarkButton"
 
-export default async function MarkButtonDataWrapper({ postId, markAs } : { postId : string, markAs : string }) {
+
+type MarkButtonDataWrapperProps = {
+    postId : string;
+    markAs : string;
+}
+
+export default async function MarkButtonDataWrapper({ postId, markAs } : MarkButtonDataWrapperProps) {
     const { count, error : allLikesError } = await getPostLikes(postId)
 
     const { data, error, guest } = await getUserPostLike(postId)

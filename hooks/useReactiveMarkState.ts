@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { bookmark, unBookmark, like, unLike } from '@/app/actions'
 
 
-export default function useReactiveMarkState(isMarked : boolean, postId : string, markAs : string) {
+export default function useReactiveMarkState(isMarked : boolean, postId : string, markAs : string, removeCardOnClient? : (postId: string) => void) {
     const [markedAtClient, setMarkedAtClient] = useState(isMarked)
         // const [likedAtClient, setLikedAtClient] = useState(false)
     
@@ -26,6 +26,9 @@ export default function useReactiveMarkState(isMarked : boolean, postId : string
                 if (markAs === 'like') {
                     unLike(postId);
                 } else if (markAs === 'bookmark') {
+                    if (removeCardOnClient) {
+                        removeCardOnClient(postId);
+                    }
                     unBookmark(postId)
                 }
             }
