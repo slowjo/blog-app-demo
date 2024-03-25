@@ -13,6 +13,7 @@ type MarkButtonProps = {
     guest: boolean | undefined,
     markAs: string,
     count?: number | null,
+    addFadeOutClass?: (postId: string) => void;
 }
 
 const UnMarkedIcon = ({ markAs } : { markAs : string }) => {
@@ -51,7 +52,7 @@ const MarkedIcon = ({ markAs } : { markAs : string }) => {
     )
 }
 
-export default function MarkButton({ isMarked, postId, guest, markAs, count } : MarkButtonProps) {
+export default function MarkButton({ isMarked, postId, guest, markAs, count, addFadeOutClass } : MarkButtonProps) {
     const { markedAtClient, handleMarkClick } = useReactiveMarkState(isMarked, postId, markAs)
 
     const router = useRouter()
@@ -61,6 +62,9 @@ export default function MarkButton({ isMarked, postId, guest, markAs, count } : 
             // alert('Please log in to like or bookmark posts')
             router.push('/sign-up')
         } else {
+            if (addFadeOutClass) {
+                addFadeOutClass(postId);
+            }
             handleMarkClick()
         }
     }

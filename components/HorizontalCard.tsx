@@ -7,11 +7,12 @@ import CardImage from "@/components/CardImage";
 type HorizontalCardProps = {
     post : PrismicDocumentWithUID<Simplify<PostDocumentData>, "post", string>;
     children: React.ReactNode;
+    fadeOutClass?: string;
 }
 
-export default function HorizontalCard({ post, children } : HorizontalCardProps) {
+export default function HorizontalCard({ post, children, fadeOutClass = '' } : HorizontalCardProps) {
     return (
-        <li className="md:col-span-6 md:col-start-7 p-4 flex gap-5 flex-col items-center bg-white rounded-lg md:flex-row dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative fade-in">
+        <li className={`md:col-span-6 md:col-start-7 p-4 flex gap-5 flex-col items-center bg-white rounded-lg md:flex-row dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative fade-in ${fadeOutClass}`}>
             <Link href={`/${post.uid}`} className="relative h-48 w-full md:h-full overflow-clip rounded-lg md:basis-full">
                 <CardImage cardType="horizontal" src={post.data.preview_image.url || ""} alt={post.data.preview_image.alt || ""} width={post.data.preview_image.dimensions?.width || 200} height={post.data.preview_image.dimensions?.height || 200} />
             </Link>

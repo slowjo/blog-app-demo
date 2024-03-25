@@ -19,6 +19,7 @@
 
 .fade-out {
     animation: fadeOutAnimation ease 1s;
+    /* transform-origin: top; */
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }
@@ -26,10 +27,10 @@
 @keyframes fadeOutAnimation {
     0% {
         opacity: 1;
-        transform: scaleY(1);
+        /* transform: scaleY(1); */
     }
     100% {
         opacity: 0;
-        transform: scaleY(0);
+        /* transform: scaleY(0); */
     }
 }
