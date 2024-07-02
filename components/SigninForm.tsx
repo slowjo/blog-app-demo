@@ -1,61 +1,12 @@
 'use client'
 
-import { ChangeEvent, FormEvent, useState } from "react"
-import { useSignIn } from "@clerk/nextjs"
-import { useRouter } from "next/navigation"
+import useSignInFlow from "@/hooks/useSignInFlow"
 import Link from "next/link"
-import { revalidatePathFromClient } from "@/app/actions"
-import useShowPassword from "@/hooks/useShowPassword"
 import LoadingSpinnerIcon from "@/components/LoadingSpinnerIcon"
 
+
 export default function SignupForm() {
-    const { isLoaded, signIn, setActive } = useSignIn()
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [message, setMessage] = useState('')
-    const [loading, setLoading] = useState(false)
-    const router = useRouter()
-
-    const { showPassword, handleShowPasswordClick } = useShowPassword()
-
-    const handleUsernameChange = (e : ChangeEvent<HTMLInputElement>) => {
-        setUsername(e.target.value)
-    }
-
-    const handlePasswordChange = (e : ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value)
-    }
-
-    const handleSubmit = async (e : FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-
-        if (!isLoaded) {
-            return
-        }
-
-        try {
-            setLoading(true)
-            const result = await signIn.create({
-                identifier: username,
-                password: password, 
-            })
-
-            if (result.status === 'complete') {
-                await setActive({ session: result.createdSessionId })
-                await revalidatePathFromClient()
-                router.push('/')
-            } else {
-                console.log(result)
-            }
-
-            setLoading(false)
-            
-        } catch(error : any) {
-            console.log('error:', error.errors[0].longMessage)
-            setMessage(error.errors[0].longMessage)
-            setLoading(false)
-        }
-    }
+    const { username, password, message, loading, handlePasswordChange, handleShowPasswordClick, handleSubmit, handleUsernameChange, showPassword } = useSignInFlow()
 
     return (
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
