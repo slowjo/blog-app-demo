@@ -1,10 +1,11 @@
 'use client'
 
-import { HiStar, HiOutlineStar, HiBookmark, HiOutlineBookmark } from "react-icons/hi"
 import useReactiveMarkState from "@/hooks/useReactiveMarkState"
 import { useRouter } from "next/navigation"
 import { Button } from "flowbite-react"
 import { Tooltip } from 'flowbite-react';
+import UnMarkedIcon from '@/components/UnMarkedIcon'
+import MarkedIcon from '@/components/MarkedIcon'
 
 
 type MarkButtonProps = {
@@ -14,42 +15,6 @@ type MarkButtonProps = {
     markAs: string,
     count?: number | null,
     addFadeOutClass?: (postId: string) => void;
-}
-
-const UnMarkedIcon = ({ markAs } : { markAs : string }) => {
-    return (
-        <>
-            {markAs === 'like' ? (
-                <>
-                    <HiOutlineStar className="text-lg" />
-                    {/* <p>Like</p> */}
-                </>
-            ) : (
-                <>
-                    <HiOutlineBookmark className="text-lg" />
-                    {/* <p>Bookmark</p> */}
-                </>
-            )}
-        </>
-    )
-}
-
-const MarkedIcon = ({ markAs } : { markAs : string }) => {
-    return (
-        <>
-            {markAs === 'like' ? (
-                <>
-                    <HiStar className="text-lg" />
-                    {/* <p>Liked</p> */}
-                </>
-            ) : (
-                <>
-                    <HiBookmark className="text-lg" />
-                    {/* <p>Bookmarked</p> */}
-                </>
-            )}
-        </>
-    )
 }
 
 export default function MarkButton({ isMarked, postId, guest, markAs, count, addFadeOutClass } : MarkButtonProps) {

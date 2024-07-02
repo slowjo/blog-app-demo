@@ -1,5 +1,4 @@
 import { getBookmarkedPosts, getPostLikes, getUserPostLike } from "@/app/actions";
-import HorizontalCard from "./HorizontalCard";
 import BookmarkedPostsClientList from "./BookmarkedPostsClientList";
 
 
@@ -30,10 +29,5 @@ export default async function BookmarkedPosts() {
 
     return (
         <BookmarkedPostsClientList posts={data} likes={likes} />
-        // <ul className="md:grid grid-cols-[0px_0px_0px_0px_0px_0px_1fr_1fr_1fr_1fr_1fr_1fr] max-w-2xl w-full">
-        //     {data && data.map((post) => (
-        //         <HorizontalCard post={post} key={post.id} client={true} />
-        //     ))}
-        // </ul>
     );
 }
