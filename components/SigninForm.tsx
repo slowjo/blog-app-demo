@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { revalidatePathFromClient } from "@/app/actions"
 import useShowPassword from "@/hooks/useShowPassword"
+import LoadingSpinnerIcon from "@/components/LoadingSpinnerIcon"
 
 export default function SignupForm() {
     const { isLoaded, signIn, setActive } = useSignIn()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
+    const [loading, setLoading] = useState(false)
     const router = useRouter()
 
     const { showPassword, handleShowPasswordClick } = useShowPassword()
@@ -32,6 +34,7 @@ export default function SignupForm() {
         }
 
         try {
+            setLoading(true)
             const result = await signIn.create({
                 identifier: username,
                 password: password, 
@@ -44,10 +47,13 @@ export default function SignupForm() {
             } else {
                 console.log(result)
             }
+
+            setLoading(false)
             
         } catch(error : any) {
             console.log('error:', error.errors[0].longMessage)
             setMessage(error.errors[0].longMessage)
+            setLoading(false)
         }
     }
 
@@ -73,7 +79,7 @@ export default function SignupForm() {
                       </div>
                       <p className="text-sm font-light text-gray-500 dark:text-gray-400">{message}</p>
                   </div>
-                  <button type="submit" className="w-full text-gray-900 bg-orange-200 hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
+                  <button type="submit" disabled={loading} className="w-full text-gray-900 bg-orange-200 hover:bg-orange-300 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{loading && <LoadingSpinnerIcon />}Sign in</button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                       Don&apos;t have an account? <Link href="/sign-up" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</Link>
                   </p>
