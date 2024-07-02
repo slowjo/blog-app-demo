@@ -1,5 +1,3 @@
-'use client'
-
 import { JSXMapSerializer, PrismicRichText } from "@prismicio/react";
 import ArticleImage from "./ArticleImage";
 import { RichTextField } from "@prismicio/client";
