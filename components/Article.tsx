@@ -13,6 +13,8 @@ export default async function Article({ articleUid } : { articleUid : string }) 
     .getByUID("post", articleUid)
     .catch(() => notFound());
 
+    // comment
+
     return (
         <article className="prose prose-img:rounded-xl mx-auto">
             <div className="not-prose flex justify-end gap-5">
